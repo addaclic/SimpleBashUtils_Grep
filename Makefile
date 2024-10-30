@@ -2,6 +2,8 @@ PROJECT_NAME = My_grep
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -std=c11
 
+.PHONY: all clean style $(PROJECT_NAME)
+
 all: $(PROJECT_NAME)
 
 $(PROJECT_NAME): $(PROJECT_NAME).c
