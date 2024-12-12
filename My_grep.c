@@ -40,11 +40,11 @@ int parse_opts(const int argc, char *argv[], my_grep_opt *opt) {
         break;
       case 'e':
         opt->e = 1;
-        e_pattern(optarg, opt);
+        e_template(optarg, opt);
         break;
       case 'f':
         opt->f = 1;
-        f_pattern(optarg, opt);
+        f_template(optarg, opt);
         break;
       case 'o':
         opt->o = 1;
@@ -54,35 +54,35 @@ int parse_opts(const int argc, char *argv[], my_grep_opt *opt) {
         return 1;
     }
   }
-  if (!opt->pattern_count) {
-    strcat(opt->pattern_str, argv[optind++]);
-    ++(opt->pattern_count);
+  if (!opt->template_count) {
+    strcat(opt->template_str, argv[optind++]);
+    ++(opt->template_count);
   }
   return 0;
 }
 
-void e_pattern(const char *optarg, my_grep_opt *opt) {
-  if (opt->pattern_count) strcat(opt->pattern_str, "|");
-  strcat(opt->pattern_str, optarg);
-  ++(opt->pattern_count);
+void e_template(const char *optarg, my_grep_opt *opt) {
+  if (opt->template_count) strcat(opt->template_str, "|");
+  strcat(opt->template_str, optarg);
+  ++(opt->template_count);
 }
 
-void f_pattern(const char *optarg, my_grep_opt *opt) {
+void f_template(const char *optarg, my_grep_opt *opt) {
   FILE *pattern_file;
   if ((pattern_file = fopen(optarg, "r")) == NULL) {
     fprintf(stderr, "grep: %s: No such file or directory\n", optarg);
   } else {
-    char pattern_str[BUFF_SIZE];
-    while (fgets(pattern_str, BUFF_SIZE, pattern_file) != NULL) {
-      if (opt->pattern_count) strcat(opt->pattern_str, "|");
-      if (pattern_str[0] == '\n')
-        strcat(opt->pattern_str, ".");
+    char template_str[BUFF_SIZE];
+    while (fgets(template_str, BUFF_SIZE, pattern_file) != NULL) {
+      if (opt->template_count) strcat(opt->template_str, "|");
+      if (template_str[0] == '\n')
+        strcat(opt->template_str, ".");
       else {
-        if (pattern_str[strlen(pattern_str) - 1] == '\n')
-          pattern_str[strlen(pattern_str) - 1] = '\0';
-        strcat(opt->pattern_str, pattern_str);
+        if (template_str[strlen(template_str) - 1] == '\n')
+          template_str[strlen(template_str) - 1] = '\0';
+        strcat(opt->template_str, template_str);
       }
-      ++(opt->pattern_count);
+      ++(opt->template_count);
     }
   }
 }
@@ -105,7 +105,7 @@ void grep_magic(FILE *file_name, const int argc, const char *name_of_file,
   regmatch_t match = {0};
   int reg_param = REG_EXTENDED;
   if (opt.i) reg_param = REG_EXTENDED | REG_ICASE;
-  regcomp(&pattern_struct, opt.pattern_str, reg_param);
+  regcomp(&pattern_struct, opt.template_str, reg_param);
   char file_str[BUFF_SIZE];
   int str_num = 1;
   int count_match = 0;

@@ -38,8 +38,8 @@
  * @brief Struct for storing options conditions reading from the command line
  */
 typedef struct {
-  char pattern_str[BUFF_SIZE];
-  int pattern_count;
+  char template_str[BUFF_SIZE];
+  int template_count;
   char i;
   char n;
   char s;
@@ -62,8 +62,8 @@ typedef struct {
  */
 int parse_opts(const int, char *[], my_grep_opt *);
 
-void e_pattern(const char *, my_grep_opt *);
-void f_pattern(const char *, my_grep_opt *);
+void e_template(const char *, my_grep_opt *);
+void f_template(const char *, my_grep_opt *);
 
 /**
  * @brief Read and print file
