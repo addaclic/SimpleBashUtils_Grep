@@ -60,9 +60,9 @@ typedef struct {
  * @param my_cat_opt third argument of the function that contains options
  * @return a condition of success or failure
  */
-int parse_opts(int, char *[], my_grep_opt *);
-void e_template(char *, my_grep_opt *);
-void f_template(char *, my_grep_opt *);
+int parse_opts(const int, char *[], my_grep_opt *);
+void e_template(const char *, my_grep_opt *);
+void f_template(const char *, my_grep_opt *);
 
 /**
  * @brief Read and print file
@@ -71,7 +71,7 @@ void f_template(char *, my_grep_opt *);
  * @param my_cat_opt third argument of the function that contains options
  */
 
-void output_file(int, char *[], my_grep_opt);
-void grep_magic(FILE *, int, char *, my_grep_opt);
+void output_file(const int, char *[], my_grep_opt);
+void grep_magic(FILE *, const int, const char *, my_grep_opt);
 
 #endif  // MY_GREP_H
