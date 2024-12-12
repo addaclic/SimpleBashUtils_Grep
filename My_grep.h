@@ -1,3 +1,11 @@
+/**
+ * \mainpage The **grep utility** is used to concatenate and display the
+ * contents of one or more files.
+ *
+ * \author Andrey addaclic
+ * \copyright MIT License
+ */
+
 #ifndef MY_GREP_H
 #define MY_GREP_H
 
@@ -26,6 +34,9 @@
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * @brief Struct for storing options conditions reading from the command line
+ */
 typedef struct {
   char pattern_str[BUFF_SIZE];
   int pattern_count;
@@ -41,10 +52,27 @@ typedef struct {
   char f;
 } my_grep_opt;
 
-int parse_opts(int, char *[], my_grep_opt *);
-void e_pattern(char *, my_grep_opt *);
-void f_pattern(char *, my_grep_opt *);
-void output_file(int, char *[], my_grep_opt);
-void grep_magic(FILE *, int, char *, my_grep_opt);
+/**
+ * @brief Function for parsing options from the command line
+ * @param int first argument of the function argc
+ * @param char_ptr second argument of the function argv
+ * @param my_grep_opt third argument of the function struct that contains
+ * options
+ * @return a condition of success or failure
+ */
+int parse_opts(const int, char *[], my_grep_opt *);
+
+void e_pattern(const char *, my_grep_opt *);
+void f_pattern(const char *, my_grep_opt *);
+
+/**
+ * @brief Read and print file
+ * @param int first argument of the function argc
+ * @param char_ptr second argument of the function argv
+ * @param my_grep_opt third argument of the function structt that contains
+ * options
+ */
+void output_file(const int, char *[], my_grep_opt);
+void grep_magic(FILE *, const int, const char *, my_grep_opt);
 
 #endif  // MY_GREP_H

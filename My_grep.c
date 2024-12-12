@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-int parse_opts(int argc, char *argv[], my_grep_opt *opt) {
+int parse_opts(const int argc, char *argv[], my_grep_opt *opt) {
   int back_char;
   while ((back_char = getopt_long(argc, argv, "inhlce:vf:", NULL, NULL)) !=
          -1) {
@@ -61,13 +61,13 @@ int parse_opts(int argc, char *argv[], my_grep_opt *opt) {
   return 0;
 }
 
-void e_pattern(char *optarg, my_grep_opt *opt) {
+void e_pattern(const char *optarg, my_grep_opt *opt) {
   if (opt->pattern_count) strcat(opt->pattern_str, "|");
   strcat(opt->pattern_str, optarg);
   ++(opt->pattern_count);
 }
 
-void f_pattern(char *optarg, my_grep_opt *opt) {
+void f_pattern(const char *optarg, my_grep_opt *opt) {
   FILE *pattern_file;
   if ((pattern_file = fopen(optarg, "r")) == NULL) {
     fprintf(stderr, "grep: %s: No such file or directory\n", optarg);
@@ -87,7 +87,7 @@ void f_pattern(char *optarg, my_grep_opt *opt) {
   }
 }
 
-void output_file(int argc, char *argv[], my_grep_opt opt) {
+void output_file(const int argc, char *argv[], my_grep_opt opt) {
   for (int i = optind; i < argc; ++i) {
     FILE *file_name;
     if ((file_name = fopen(argv[i], "r")) == NULL) {
@@ -99,7 +99,7 @@ void output_file(int argc, char *argv[], my_grep_opt opt) {
   }
 }
 
-void grep_magic(FILE *file_name, int argc, char *name_of_file,
+void grep_magic(FILE *file_name, const int argc, const char *name_of_file,
                 my_grep_opt opt) {
   regex_t pattern_struct = {0};
   regmatch_t match = {0};
